@@ -1,35 +1,42 @@
 import { useState } from 'react';
-import type { AnyAlgorithm } from '../algorithms/types';
+import type { AnyAlgorithm, Step } from '../algorithms/types';
 import ErrorBox from './ErrorBox';
+import StepViewer from './StepViewer';
 import { uiRegistry } from './uiRegistry';
+import { useStepper } from './useStepper';
 
 /**
  * The generic page for one algorithm. It shows the name and description,
  * renders the algorithm's form, validates the submitted input, shows errors,
- * and runs the algorithm to display its result.
+ * and runs the algorithm with step-by-step controls and a progressive result view.
  */
 export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }) {
   const [errors, setErrors] = useState<string[]>([]);
   // Wrapped in an object so "no result yet" (null) is never confused with a real result.
-  const [output, setOutput] = useState<{ result: unknown } | null>(null);
+  const [output, setOutput] = useState<{ result: unknown; steps: Step[] } | null>(null);
   const ui = uiRegistry[algorithm.id];
+  const stepper = useStepper(output ? output.steps.length : 0);
 
-  // Validate the input; show errors if any, otherwise run the algorithm and keep its result.
+  // Validate the input; show errors if any, otherwise run the algorithm and start at Step 1.
   function handleSubmit(input: unknown) {
     const messages = algorithm.validate(input);
     setErrors(messages);
     if (messages.length > 0) {
       setOutput(null);
+      stepper.reset();
       return;
     }
-    const { result } = algorithm.run(input); // steps are used in a later phase
-    setOutput({ result });
+    const { steps: rawSteps, result } = algorithm.run(input);
+    const steps = ui?.formatSteps ? ui.formatSteps(input, rawSteps, result) : rawSteps;
+    setOutput({ result, steps });
+    stepper.reset();
   }
 
-  // Forget old errors and results when the form is cleared.
+  // Forget old errors, steps, and results when the form is cleared.
   function handleClear() {
     setErrors([]);
     setOutput(null);
+    stepper.reset();
   }
 
   return (
@@ -46,9 +53,14 @@ export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }
           </div>
           <ErrorBox errors={errors} />
           {output && (
-            <div className="card">
-              <ui.ResultView result={output.result} />
-            </div>
+            <>
+              <div className="card">
+                <StepViewer steps={output.steps} stepper={stepper} />
+              </div>
+              <div className="card">
+                <ui.ResultView result={output.result} steps={output.steps} currentStep={stepper.currentStep} />
+              </div>
+            </>
           )}
         </>
       )}

@@ -1,5 +1,6 @@
 // Shared types for the UI layer. Every algorithm's UI components follow these shapes.
 import type { ComponentType } from 'react';
+import type { Step } from '../algorithms/types';
 
 /** Props given to every algorithm's input form. */
 export interface InputFormProps<Input> {
@@ -14,6 +15,10 @@ export interface InputFormProps<Input> {
 /** Props given to every algorithm's result view. */
 export interface ResultViewProps<Result> {
   result: Result;
+  /** Optional list of steps from run(), used by step-aware result views. */
+  steps?: Step[];
+  /** Optional 0-based index of the current step in step-by-step mode. */
+  currentStep?: number;
 }
 
 /** The UI components that belong to one algorithm. */
@@ -22,4 +27,7 @@ export interface AlgorithmUI {
   InputForm: ComponentType<InputFormProps<any>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ResultView: ComponentType<ResultViewProps<any>>;
+  /** Optional UI helper to rewrite step descriptions in clearer plain English. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formatSteps?(input: any, steps: Step[], result: any): Step[];
 }

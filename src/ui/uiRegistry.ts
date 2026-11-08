@@ -3,7 +3,8 @@
 import type { AlgorithmUI } from './types';
 import NfaForm from './nfaToDfa/NfaForm';
 import DfaResultView from './nfaToDfa/DfaResultView';
+import { formatNfaSteps } from './nfaToDfa/partialDfa';
 
 export const uiRegistry: Record<string, AlgorithmUI> = {
-  'nfa-to-dfa': { InputForm: NfaForm, ResultView: DfaResultView },
+  'nfa-to-dfa': { InputForm: NfaForm, ResultView: DfaResultView, formatSteps: formatNfaSteps },
 };
