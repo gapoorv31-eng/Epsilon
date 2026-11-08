@@ -1,0 +1,301 @@
+/* Epsilon – light theme, plain CSS. */
+
+:root {
+  --bg: #f4f5f9;
+  --card: #ffffff;
+  --text: #1f2330;
+  --muted: #6b7180;
+  --border: #dfe2ea;
+  --accent: #4f46e5;
+  --accent-soft: #eef0ff;
+  --accept: #e7f7ec;
+  --accept-text: #146c34;
+  --error-bg: #fdecec;
+  --error-border: #e5484d;
+  --error-text: #a3161b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+/* ----- Shell ----- */
+
+.app-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.app-tagline {
+  margin: 0.1rem 0 0;
+  color: var(--muted);
+}
+
+.app-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.sidebar-item {
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: var(--bg);
+}
+
+.sidebar-item.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.main {
+  flex: 1;
+  min-width: 0; /* lets wide tables scroll instead of stretching the page */
+}
+
+/* ----- Page ----- */
+
+.page-title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.page-description {
+  margin: 0.25rem 0 1rem;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.coming-soon {
+  color: var(--muted);
+  text-align: center;
+}
+
+.section-title {
+  margin: 1rem 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.card .section-title:first-child {
+  margin-top: 0;
+}
+
+.hint {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.summary {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+/* ----- Form ----- */
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type='text'] {
+  font: inherit;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+}
+
+input[type='text']:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: var(--accent);
+}
+
+.cell-input {
+  width: 100%;
+  min-width: 6rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.button {
+  font: inherit;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.button.primary:hover {
+  filter: brightness(1.1);
+}
+
+.button.secondary {
+  background: #fff;
+  color: var(--text);
+}
+
+.button.secondary:hover {
+  background: var(--bg);
+}
+
+/* ----- Errors ----- */
+
+.error-box {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-left-width: 5px;
+  color: var(--error-text);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.error-box ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+/* ----- Tables ----- */
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.7rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table thead th {
+  background: var(--bg);
+  font-size: 0.9rem;
+}
+
+.start-arrow {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.accepting-row {
+  background: var(--accept);
+}
+
+.accepting-row strong {
+  color: var(--accept-text);
+}
+
+.dead,
+.dead-row {
+  color: #9aa0ac;
+  font-style: italic;
+}
+
+/* ----- Phone-width screens ----- */
+
+@media (max-width: 700px) {
+  .app-body {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    flex: none;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar-item {
+    white-space: nowrap;
+  }
+
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
