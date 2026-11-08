@@ -394,6 +394,56 @@ input[type='text']:focus {
   vertical-align: middle;
 }
 
+/* ----- Graphs ----- */
+
+.graph-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.graph-panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafbfe;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.graph-panel-title {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.graph-panel-subtitle {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.graph-fit-btn {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+}
+
+.graph-canvas {
+  width: 100%;
+  height: 320px;
+  background: #ffffff;
+}
+
 /* ----- Phone-width screens ----- */
 
 @media (max-width: 700px) {
@@ -415,6 +465,10 @@ input[type='text']:focus {
   }
 
   .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .graph-grid {
     grid-template-columns: 1fr;
   }
 

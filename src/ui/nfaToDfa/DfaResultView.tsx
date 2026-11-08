@@ -1,13 +1,22 @@
-import { DEAD_STATE, type DFA } from '../../algorithms/nfaToDfa';
+import { DEAD_STATE, type DFA, type NFA } from '../../algorithms/nfaToDfa';
+import GraphView from '../graph/GraphView';
 import type { ResultViewProps } from '../types';
+import { activeNfaStates, dfaToGraph, nfaToGraph } from './graphData';
 import { buildPartialDfa } from './partialDfa';
 
 /**
- * Shows the resulting DFA: a one-line summary and its transition table.
- * When `steps` and `currentStep` are passed, reveals rows and cells progressively
- * as each step is reached, highlighting the active row/cell and newly found states.
+ * Shows the resulting DFA: side-by-side NFA and DFA graphs (when `input` is passed),
+ * a one-line summary, and the progressive DFA transition table.
+ * Both the DFA graph and the table follow the same `currentStep`, while the NFA graph
+ * highlights the NFA states inside the DFA state currently being processed.
  */
-export default function DfaResultView({ result: dfa, steps, currentStep }: ResultViewProps<DFA>) {
+export default function DfaResultView({
+  result: dfa,
+  input: nfa,
+  runKey = 0,
+  steps,
+  currentStep,
+}: ResultViewProps<DFA, NFA>) {
   const isStepMode = steps !== undefined && currentStep !== undefined && steps.length > 0;
   const isComplete = !isStepMode || currentStep >= steps.length - 1;
   const partial = isStepMode ? buildPartialDfa(steps, currentStep, dfa) : null;
@@ -15,8 +24,41 @@ export default function DfaResultView({ result: dfa, steps, currentStep }: Resul
   const visibleStates = partial ? partial.states : dfa.states;
   const visibleAccepting = visibleStates.filter((s) => dfa.accepting.includes(s.name)).length;
 
+  const highlightedNfa = activeNfaStates(dfa, partial);
+  const nfaGraph = nfa ? nfaToGraph(nfa, highlightedNfa) : null;
+  const dfaGraph = dfaToGraph(dfa, partial);
+  const focusDfaName = partial?.activeFrom ?? partial?.newlyDiscovered;
+
   return (
     <div>
+      {nfaGraph && (
+        <>
+          <h3 className="section-title">State Diagrams</h3>
+          <div className="graph-grid">
+            <GraphView
+              title="NFA"
+              subtitle={
+                highlightedNfa.length > 0
+                  ? `Highlighting NFA states in ${focusDfaName}: ${highlightedNfa.join(', ')}`
+                  : 'Input automaton'
+              }
+              graph={nfaGraph}
+              layoutKey={`nfa-${runKey}`}
+            />
+            <GraphView
+              title="DFA"
+              subtitle={
+                isComplete
+                  ? `Complete DFA (${dfa.states.length} states)`
+                  : `Revealed so far (${visibleStates.length} of ${dfa.states.length} states)`
+              }
+              graph={dfaGraph}
+              layoutKey={`dfa-${runKey}`}
+            />
+          </div>
+        </>
+      )}
+
       <h3 className="section-title">Resulting DFA</h3>
       <p className="summary">
         {isComplete

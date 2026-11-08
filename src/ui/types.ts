@@ -13,8 +13,12 @@ export interface InputFormProps<Input> {
 }
 
 /** Props given to every algorithm's result view. */
-export interface ResultViewProps<Result> {
+export interface ResultViewProps<Result, Input = unknown> {
   result: Result;
+  /** Optional original input submitted by the user, so the result view can visualize the input too. */
+  input?: Input;
+  /** Optional unique key that changes on every Convert run, used to trigger a fresh graph layout. */
+  runKey?: number;
   /** Optional list of steps from run(), used by step-aware result views. */
   steps?: Step[];
   /** Optional 0-based index of the current step in step-by-step mode. */
@@ -26,7 +30,7 @@ export interface AlgorithmUI {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   InputForm: ComponentType<InputFormProps<any>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ResultView: ComponentType<ResultViewProps<any>>;
+  ResultView: ComponentType<ResultViewProps<any, any>>;
   /** Optional UI helper to rewrite step descriptions in clearer plain English. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formatSteps?(input: any, steps: Step[], result: any): Step[];

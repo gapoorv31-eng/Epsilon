@@ -13,7 +13,12 @@ import { useStepper } from './useStepper';
 export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }) {
   const [errors, setErrors] = useState<string[]>([]);
   // Wrapped in an object so "no result yet" (null) is never confused with a real result.
-  const [output, setOutput] = useState<{ result: unknown; steps: Step[] } | null>(null);
+  const [output, setOutput] = useState<{
+    input: unknown;
+    result: unknown;
+    steps: Step[];
+    runKey: number;
+  } | null>(null);
   const ui = uiRegistry[algorithm.id];
   const stepper = useStepper(output ? output.steps.length : 0);
 
@@ -28,7 +33,12 @@ export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }
     }
     const { steps: rawSteps, result } = algorithm.run(input);
     const steps = ui?.formatSteps ? ui.formatSteps(input, rawSteps, result) : rawSteps;
-    setOutput({ result, steps });
+    setOutput((prev) => ({
+      input,
+      result,
+      steps,
+      runKey: (prev?.runKey ?? 0) + 1,
+    }));
     stepper.reset();
   }
 
@@ -58,7 +68,13 @@ export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }
                 <StepViewer steps={output.steps} stepper={stepper} />
               </div>
               <div className="card">
-                <ui.ResultView result={output.result} steps={output.steps} currentStep={stepper.currentStep} />
+                <ui.ResultView
+                  result={output.result}
+                  input={output.input}
+                  runKey={output.runKey}
+                  steps={output.steps}
+                  currentStep={stepper.currentStep}
+                />
               </div>
             </>
           )}
