@@ -76,7 +76,17 @@ export default function AlgorithmPage({ algorithm }: { algorithm: AnyAlgorithm }
                   currentStep={stepper.currentStep}
                 />
               </div>
+              {ui.ExtraResultCard && (
+                <div className="card">
+                  <ui.ExtraResultCard key={output.runKey} input={output.input} result={output.result} />
+                </div>
+              )}
             </>
+          )}
+          {ui.ValidationPanel && (
+            <div className="card">
+              <ui.ValidationPanel />
+            </div>
           )}
         </>
       )}

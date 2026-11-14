@@ -31,6 +31,11 @@ export interface AlgorithmUI {
   InputForm: ComponentType<InputFormProps<any>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ResultView: ComponentType<ResultViewProps<any, any>>;
+  /** Optional card shown below the result view after a valid run (e.g. a string tester). */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ExtraResultCard?: ComponentType<{ input: any; result: any }>;
+  /** Optional validation panel always shown on the algorithm's page. */
+  ValidationPanel?: ComponentType;
   /** Optional UI helper to rewrite step descriptions in clearer plain English. */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formatSteps?(input: any, steps: Step[], result: any): Step[];
