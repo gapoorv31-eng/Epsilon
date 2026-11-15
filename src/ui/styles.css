@@ -92,6 +92,15 @@ body {
   min-width: 0; /* lets wide tables scroll instead of stretching the page */
 }
 
+.app-footer {
+  text-align: center;
+  padding: 1.25rem 1rem 2rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+
 /* ----- Page ----- */
 
 .page-title {

@@ -4,7 +4,7 @@ import AlgorithmPage from './AlgorithmPage';
 
 /**
  * The generic app shell: a header, a sidebar listing every algorithm from the
- * registry, and a main area showing the selected algorithm's page.
+ * registry, a main area showing the selected algorithm's page, and a course footer.
  */
 export default function AppShell() {
   const [selectedId, setSelectedId] = useState(algorithms[0]?.id);
@@ -35,6 +35,10 @@ export default function AppShell() {
           {selected ? <AlgorithmPage key={selected.id} algorithm={selected} /> : <p>No algorithms registered.</p>}
         </main>
       </div>
+
+      <footer className="app-footer">
+        Epsilon · Automata Theory (CSET302)
+      </footer>
     </div>
   );
 }
