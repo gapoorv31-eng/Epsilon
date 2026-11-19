@@ -193,6 +193,15 @@ export function epsilonClosure(nfa: NFA, states: string[]): string[] {
 
 ---
 
+## 8. Pushdown Automaton Simulator (`src/algorithms/pda/` & `src/ui/pda/`)
+
+- **What a PDA is:** A finite automaton with an unbounded stack, modeled in `types.ts` (`PDA`, `PdaTransition`, `PdaConfig`, `PdaResult`). Transitions match `(from, input | ε, top)` and replace `top` with `push` (top-first; `""` = pop only).
+- **Acceptance modes:** `final-state` accepts when `remainingInput === ""` and `state ∈ accepting`; `empty-stack` accepts when `remainingInput === ""` and `stack === ""` (`accepting` is ignored).
+- **Why nondeterminism needs BFS & guards (`simulate.ts`):** Nondeterministic choices and `ε`-moves create a branching configuration graph, which can even loop infinitely (e.g. pushing on `ε`). BFS with a `visited` set explores shortest paths first, while `maxConfigurations` (`10000`) and `maxStackHeight` (`100`) prevent hangs and return `undecided: limit reached` when triggered without finding acceptance.
+- **UI (`src/ui/pda/`):** `PdaForm` (fields, acceptance mode, dynamic transition table), `graphData.ts` (merged multiline `input, top / push` edge labels), and `PdaResultView` (Accepted/Rejected/Undecided badge, `GraphView`, live input tape, and vertical stack).
+
+---
+
 ## 6. Items Not Verified
 
 - **CI run.** The GitHub Actions workflow has not been run on GitHub from this machine (no push was done). Its steps were checked locally (`npm ci`, `npm test`, `npm run build`), but the actual Pages deployment is **not verified**.

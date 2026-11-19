@@ -11,6 +11,8 @@ import CfgResultView from './cfgToCnf/CfgResultView';
 import MealyMooreForm from './mealyMoore/MealyMooreForm';
 import MealyMooreResultView from './mealyMoore/MealyMooreResultView';
 import MachineTester from './mealyMoore/MachineTester';
+import PdaForm from './pda/PdaForm';
+import PdaResultView from './pda/PdaResultView';
 
 export const uiRegistry: Record<string, AlgorithmUI> = {
   'nfa-to-dfa': {
@@ -22,4 +24,5 @@ export const uiRegistry: Record<string, AlgorithmUI> = {
   },
   'cfg-to-cnf': { InputForm: CfgForm, ResultView: CfgResultView },
   'mealy-moore': { InputForm: MealyMooreForm, ResultView: MealyMooreResultView, ExtraResultCard: MachineTester },
+  pda: { InputForm: PdaForm, ResultView: PdaResultView },
 };

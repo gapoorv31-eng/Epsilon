@@ -110,6 +110,7 @@ const graphStylesheet: StylesheetJsonBlock[] = [
       'loop-direction': '-45deg',
       'loop-sweep': '55deg',
       label: 'data(label)',
+      'text-wrap': 'wrap',
       'font-family': 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
       'font-size': 13,
       'font-weight': 600,

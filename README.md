@@ -159,4 +159,15 @@ src/
 
 - **Moore $\to$ Mealy (`mooreToMealy` in [`src/algorithms/mealyMoore/convert.ts`](src/algorithms/mealyMoore/convert.ts)):** Keeps the exact same states and transitions, and sets the Mealy output of `(q, a)` to the Moore output of the target state $\delta(q, a)$. The Moore start state's initial output (emitted before any input) has no Mealy equivalent.
 - **Mealy $\to$ Moore (`mealyToMoore` in [`src/algorithms/mealyMoore/convert.ts`](src/algorithms/mealyMoore/convert.ts)):** Runs BFS from `(q0, d)` (where `d` is the chosen default start output, defaulting to the first output symbol), creating reachable Moore states `(q, o)` named `q/o` with state output `o` and transition `(q, o) --a--> (delta(q, a), lambda(q, a))`.
-- **UI (`src/ui/mealyMoore/`):** Includes `MealyMooreForm` (direction selector, automatic transition table, default start output field), `MealyMooreResultView` (side-by-side graphs and progressive table), and `MachineTester` (compares output strings while ignoring the Moore start-state output).
+- **Machine Tester (`MachineTester`):** Compares output strings while ignoring the Moore start-state output.
+
+---
+
+## Algorithm Explained: Pushdown Automaton (PDA) Simulator
+
+- **What a PDA is:** A finite automaton equipped with an unbounded LIFO stack, enabling recognition of context-free languages such as $\{a^n b^n : n \ge 0\}$, even-length palindromes, and balanced parentheses.
+- **Configurations:** Each snapshot of the computation is `(state, remainingInput, stack)` (stack written top-first). Every transition pops the expected `top` symbol and pushes `push` (top-first; empty means pop only).
+- **Acceptance modes:**
+  - **Final state:** Accepts when `remainingInput` is empty and the current state is in `accepting`.
+  - **Empty stack:** Accepts when `remainingInput` is empty and the stack is empty (`accepting` is ignored).
+- **Why nondeterminism needs BFS & guards:** A PDA may have multiple transitions for the same `(state, input, top)` or `ε`-moves. [`simulatePda`](src/algorithms/pda/simulate.ts) explores the configuration graph via BFS with a `visited` set, returning `accepted` if any branch succeeds, `rejected` only if all reachable configurations are exhausted without hitting a guard, and `undecided: limit reached` if `maxConfigurations` (default `10000`) or `maxStackHeight` (default `100`) stops an infinite `ε`-loop.

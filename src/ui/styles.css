@@ -787,3 +787,123 @@ input[type='text']:focus {
   margin: 0 0 0.4rem;
   font-size: 0.95rem;
 }
+
+/* ----- PDA Simulator ----- */
+
+.pda-cell-input {
+  width: 5.5rem;
+  min-width: 4rem;
+}
+
+.pda-remove-btn {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+.badge-warn {
+  background: #fff3bf;
+  color: #92400e;
+  border: 1px solid #f59f00;
+}
+
+.pda-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.pda-config-panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem;
+  background: #fafbfe;
+}
+
+.pda-section-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0.75rem 0 0.35rem;
+}
+
+.pda-tape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.pda-tape-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 600;
+}
+
+.pda-tape-cell.read {
+  background: var(--bg);
+  color: #9aa0ac;
+}
+
+.pda-tape-cell.current {
+  background: #fff3bf;
+  border-color: #f59f00;
+  outline: 2px solid #f59f00;
+  outline-offset: -1px;
+}
+
+.pda-tape-empty,
+.pda-tape-end,
+.pda-stack-empty {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.pda-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 180px;
+}
+
+.pda-stack-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 700;
+}
+
+.pda-stack-cell.top {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pda-top-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+}
+
+@media (max-width: 700px) {
+  .pda-layout {
+    grid-template-columns: 1fr;
+  }
+}
