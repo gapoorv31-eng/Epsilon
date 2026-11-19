@@ -2,7 +2,7 @@
 
 **An interactive web toolkit that simulates Automata Theory (CSET302) algorithms with step-by-step table and graph visualization.**
 
-- **Live Demo:** `https://<your-github-username>.github.io/Epsilon/` *(replace `<your-github-username>` with your GitHub username)*
+- **Live Demo:** `https://gapoorv31-eng.github.io/Epsilon/`
 - **Validation Test Report:** [`docs/TEST_REPORT.md`](docs/TEST_REPORT.md)
 - **Viva & Code Guide:** [`EXPLANATION.md`](EXPLANATION.md)
 
