@@ -20,6 +20,7 @@ const graphStylesheet: StylesheetJsonBlock[] = [
       width: 48,
       height: 48,
       label: 'data(label)',
+      'text-wrap': 'wrap',
       'text-valign': 'center',
       'text-halign': 'center',
       'font-family': 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',

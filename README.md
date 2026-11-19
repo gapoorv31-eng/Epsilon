@@ -152,4 +152,11 @@ src/
 - **DFA Minimization:** Partition refinement (Hopcroft's / table-filling algorithm) to merge equivalent DFA states.
 - **Regular Expression to $\varepsilon$-NFA:** Thompson's construction with step-by-step fragment assembly.
 - **$\varepsilon$-NFA to NFA:** Dedicated removal of $\varepsilon$-transitions without full subset construction.
-- **Context-Free Grammar to Chomsky Normal Form (CFG $\to$ CNF):** Step-by-step unit, nullable, and long-production elimination.
+
+---
+
+## Algorithm Explained: Mealy and Moore Conversion
+
+- **Moore $\to$ Mealy (`mooreToMealy` in [`src/algorithms/mealyMoore/convert.ts`](src/algorithms/mealyMoore/convert.ts)):** Keeps the exact same states and transitions, and sets the Mealy output of `(q, a)` to the Moore output of the target state $\delta(q, a)$. The Moore start state's initial output (emitted before any input) has no Mealy equivalent.
+- **Mealy $\to$ Moore (`mealyToMoore` in [`src/algorithms/mealyMoore/convert.ts`](src/algorithms/mealyMoore/convert.ts)):** Runs BFS from `(q0, d)` (where `d` is the chosen default start output, defaulting to the first output symbol), creating reachable Moore states `(q, o)` named `q/o` with state output `o` and transition `(q, o) --a--> (delta(q, a), lambda(q, a))`.
+- **UI (`src/ui/mealyMoore/`):** Includes `MealyMooreForm` (direction selector, automatic transition table, default start output field), `MealyMooreResultView` (side-by-side graphs and progressive table), and `MachineTester` (compares output strings while ignoring the Moore start-state output).

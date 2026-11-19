@@ -181,6 +181,18 @@ export function epsilonClosure(nfa: NFA, states: string[]): string[] {
 
 ---
 
+## 7. Mealy and Moore Conversion (`src/algorithms/mealyMoore/` & `src/ui/mealyMoore/`)
+
+- **`types.ts`:** Defines `MealyMachine` (output on `(state, symbol)`), `MooreMachine` (output on `state`), `MealyMooreInput`, `MealyMooreResult`, and step data types (`MealyToMooreStepData`, `MooreToMealyStepData`).
+- **`validate.ts`:** `validateMealyMoore` checks direction/machine-kind match, non-empty states and alphabets, valid start state and `defaultStartOutput`, complete transitions, and valid outputs in `outputAlphabet`.
+- **`convert.ts`:**
+  - `mealyToMoore` uses BFS with an unambiguous internal pair key (`JSON.stringify([state, output])`) so state names containing `/` or `,` never collide, and allocates readable display names like `A/0`.
+  - `mooreToMealy` emits one step per `(state, symbol)` (total `|Q| * |Σ|` steps), noting in the first step that the Moore start-state output has no Mealy equivalent.
+- **`runMachine.ts`:** `runTransducer` executes either machine on an input sequence, returning `outputs` (without Moore's initial start-state output) and `fullOutputs`.
+- **`src/ui/mealyMoore/`:** `MealyMooreForm` (direction selector, automatic transition table), `partialMachine.ts` (progressive reveal), `graphData.ts` (two-line Moore node labels `name\nout: <output>` and merged Mealy `input/output` edges), `MealyMooreResultView`, and `MachineTester`.
+
+---
+
 ## 6. Items Not Verified
 
 - **CI run.** The GitHub Actions workflow has not been run on GitHub from this machine (no push was done). Its steps were checked locally (`npm ci`, `npm test`, `npm run build`), but the actual Pages deployment is **not verified**.

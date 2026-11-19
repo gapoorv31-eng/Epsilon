@@ -6,6 +6,11 @@ import DfaResultView from './nfaToDfa/DfaResultView';
 import StringTester from './nfaToDfa/StringTester';
 import ValidationPanel from './nfaToDfa/ValidationPanel';
 import { formatNfaSteps } from './nfaToDfa/partialDfa';
+import CfgForm from './cfgToCnf/CfgForm';
+import CfgResultView from './cfgToCnf/CfgResultView';
+import MealyMooreForm from './mealyMoore/MealyMooreForm';
+import MealyMooreResultView from './mealyMoore/MealyMooreResultView';
+import MachineTester from './mealyMoore/MachineTester';
 
 export const uiRegistry: Record<string, AlgorithmUI> = {
   'nfa-to-dfa': {
@@ -15,4 +20,6 @@ export const uiRegistry: Record<string, AlgorithmUI> = {
     ValidationPanel,
     formatSteps: formatNfaSteps,
   },
+  'cfg-to-cnf': { InputForm: CfgForm, ResultView: CfgResultView },
+  'mealy-moore': { InputForm: MealyMooreForm, ResultView: MealyMooreResultView, ExtraResultCard: MachineTester },
 };
